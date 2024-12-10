@@ -19,7 +19,7 @@
         
         $sqlInsert = "UPDATE cadastro SET nome='$nome',senha='$senha',email='$email',telefone='$telefone',sexo='$sexo',data_nasc='$data_nasc',end_cidade='$end_cidade',end_estado='$end_estado',end_cep='$end_cep',rg='$rg',cpf='$cpf',salario='$salario' WHERE id=$id";
         $result = $conexao->query($sqlInsert);
-        print_r($result);
+        //print_r($result);
     }
     header('Location: Control.php');
 

@@ -1,24 +1,111 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estoque</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="CSS/styleEstoque.css">
+    <style>
+        nav {
+            background: black;
+        }
+
+        .nav-link {
+            display: block;
+            padding: .5rem 1rem;
+            color: gray;
+            text-decoration: none;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+        }
+
+        .nav-link:hover {
+            color: orangered;
+        }
+
+        .item {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 16px;
+            border: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+            /* Increased height */
+            position: relative;
+            /* Add relative positioning */
+        }
+
+        .item img {
+            width: 100%;
+            height: 200px;
+            /* Increased image height */
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .item p:last-child {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            margin: 0;
+        }
+
+        .item h2 {
+            margin-top: 12px;
+            font-size: 18px;
+        }
+
+        .item p {
+            margin: 8px 0;
+            color: #666;
+        }
+    </style>
 </head>
+
 <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="telaLogin.html">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="telaCadastro.php">Cadastrar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Control.php">Control</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="telaPagamentoMod.php">Pagamentos</a>
+                    </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="telaServicos.php">Seriços</a>
+                    </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="telaEstoque.php">Estoque</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="container">
         <header>
             <input type="text" placeholder="Search" class="search">
             <button style="width: 40px; height: 40px;"><img src="Imagens/lupa.png"></button>
             <div id="btnCadastro">
 
-            
-        </div>
+
+            </div>
         </header>
 
-        
+
 
         <!-- Modal de cadastro existente -->
         <div id="modalCadastro" class="modal">
@@ -51,7 +138,7 @@
                 </form>
             </div>
         </div>
-        
+
         <aside class="sidebar">
             <p>
                 <button class="btn-adicionar" onclick="abrirModal()">
@@ -97,57 +184,58 @@
     </div>
 
     <script>
-    function filtrarProdutos() {
-        const checkboxes = document.querySelectorAll('#filtros input[type="checkbox"]:checked');
-        const categoriasSelecionadas = Array.from(checkboxes).map(cb => cb.value);
-        const produtos = document.querySelectorAll('.item');
+        function filtrarProdutos() {
+            const checkboxes = document.querySelectorAll('#filtros input[type="checkbox"]:checked');
+            const categoriasSelecionadas = Array.from(checkboxes).map(cb => cb.value);
+            const produtos = document.querySelectorAll('.item');
 
-        produtos.forEach(produto => {
-            const categoriaProduto = produto.dataset.categoria;
-            if (categoriasSelecionadas.length === 0 || categoriasSelecionadas.includes(categoriaProduto)) {
-                produto.style.display = 'block';
-            } else {
-                produto.style.display = 'none';
-            }
-        });
-    }
-
-    
-    function abrirModal() {
-        document.getElementById('modalCadastro').style.display = 'block';
-    }
-
-    function fecharModal() {
-        document.getElementById('modalCadastro').style.display = 'none';
-    }
-
-    window.onclick = function(event) {
-        var modal = document.getElementById('modalCadastro');
-        if (event.target == modal) {
-            modal.style.display = 'none';
+            produtos.forEach(produto => {
+                const categoriaProduto = produto.dataset.categoria;
+                if (categoriasSelecionadas.length === 0 || categoriasSelecionadas.includes(categoriaProduto)) {
+                    produto.style.display = 'block';
+                } else {
+                    produto.style.display = 'none';
+                }
+            });
         }
-    }
 
-    document.getElementById('formCadastro').addEventListener('submit', function(e) {
-        e.preventDefault(); 
-        
-        var formData = new FormData(this);
-        
-        fetch('saveProd.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(result => {
-            alert('Produto cadastrado com sucesso!');
-            fecharModal();
-            location.reload(); 
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-            alert('Erro ao cadastrar o produto');
+
+        function abrirModal() {
+            document.getElementById('modalCadastro').style.display = 'block';
+        }
+
+        function fecharModal() {
+            document.getElementById('modalCadastro').style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            var modal = document.getElementById('modalCadastro');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        document.getElementById('formCadastro').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            fetch('saveProd.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(result => {
+                    alert('Produto cadastrado com sucesso!');
+                    fecharModal();
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao cadastrar o produto');
+                });
         });
-    });
     </script>
 </body>
+
 </html>

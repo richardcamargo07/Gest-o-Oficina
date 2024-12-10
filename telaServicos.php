@@ -17,6 +17,8 @@ $result = $conexao->query($sql);
 <head>
     <meta charset="UTF-8">
     <title>Sistema de Vendas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         * {
             box-sizing: border-box;
@@ -26,12 +28,12 @@ $result = $conexao->query($sql);
         }
 
         body {
-            padding: 20px;
+            
             background-color: #f5f5f5;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             background-color: white;
             border-radius: 10px;
@@ -253,15 +255,63 @@ $result = $conexao->query($sql);
             border-radius: 5px;
             font-size: 16px;
         }
+        nav {
+      background: black;
+    }
+
+    .nav-link {
+      display: block;
+      padding: .5rem 1rem;
+      color: gray;
+      text-decoration: none;
+      transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+    }
+
+    .nav-link:hover {
+      color: orangered;
+    }
+
+    img {
+        height: 100px;
+        width: 100px;
+    }
     </style>
 </head>
-
 <body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="telaLogin.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="telaCadastro.php">Cadastrar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Control.php">Control</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="telaPagamentoMod.php">Pagamentos</a>
+                </li>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="telaServicos.php">Seriços</a>
+                </li>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="telaEstoque.php">Estoque</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
     <div class="container">
         <div class="header">
             <div class="profile-section">
-                <div class="photo-placeholder"></div>
-                <div class="name-placeholder"></div>
+                <img src="Imagens/logonova.jpeg" alt="">
+                
             </div>
             <div class="salary-section"></div>
             <div class="notification-section"></div>
@@ -269,9 +319,7 @@ $result = $conexao->query($sql);
 
         <div class="search-section">
             <div class="icons-row">
-                <div class="icon"></div>
-                <div class="icon"></div>
-                <div class="icon"></div>
+                
                 <p>
                     <button class="btn-adicionar" onclick="abrirModal()">
                         <img src="uploads/adicionarr.png" alt="" style="width: 25px; height: 25px;">
