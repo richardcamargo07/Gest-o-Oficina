@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -67,34 +70,35 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="telaLogin.html">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="telaCadastro.php">Cadastrar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Control.php">Control</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="telaPagamentoMod.php">Pagamentos</a>
-                    </li>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="telaServicos.php">Seriços</a>
-                    </li>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="telaEstoque.php">Estoque</a>
-                    </li>
-                </ul>
-            </div>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <?php if(isset($_SESSION['nivel_acesso']) && $_SESSION['nivel_acesso'] == 'gerente'): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="telaCadastro.php">Cadastrar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Control.php">Control</a>
+                </li>
+                <?php endif; ?>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="telaLogin.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="telaPagamentoMod.php">Pagamentos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="telaServicos.php">Serviços</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="telaEstoque.php">Estoque</a>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
     <div class="container">
         <header>
             <input type="text" placeholder="Search" class="search">

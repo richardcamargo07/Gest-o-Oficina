@@ -1,4 +1,6 @@
 <?php
+session_start(); 
+
 include_once('config_o.php');
 
 
@@ -19,6 +21,7 @@ $result = $conexao->query($sql);
     <title>Sistema de Vendas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="JavaScript/scriptTelaServ.js"></script> 
     <style>
         * {
             box-sizing: border-box;
@@ -282,22 +285,23 @@ $result = $conexao->query($sql);
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="telaLogin.html">Login</a>
-                </li>
+                <?php if(isset($_SESSION['nivel_acesso']) && $_SESSION['nivel_acesso'] == 'gerente'): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="telaCadastro.php">Cadastrar</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="Control.php">Control</a>
                 </li>
+                <?php endif; ?>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="telaLogin.html">Login</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="telaPagamentoMod.php">Pagamentos</a>
                 </li>
-                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="telaServicos.php">Seriços</a>
-                </li>
+                    <a class="nav-link" href="telaServicos.php">Serviços</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="telaEstoque.php">Estoque</a>
@@ -404,56 +408,6 @@ $result = $conexao->query($sql);
         </table>
 
     </div>
-    <script>
-        function abrirModal() {
-            const modal = document.getElementById('modalCadastro');
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 10);
-        }
-
-        function fecharModal() {
-            const modal = document.getElementById('modalCadastro');
-            modal.classList.remove('show');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300);
-        }
-
-        window.onclick = function (event) {
-            const modal = document.getElementById('modalCadastro');
-            if (event.target == modal) {
-                fecharModal();
-            }
-        }
-
-        document.getElementById('formCadastroServ').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            var formData = new FormData(this);
-
-            fetch('saveServ.php', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.text())
-                .then(result => {
-                    console.log(result);
-                    if (result.includes("sucesso")) {
-                        alert('Serviço cadastrado com sucesso!');
-                        fecharModal();
-                        location.reload();
-                    } else {
-                        alert('Erro ao cadastrar: ' + result);
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro:', error);
-                    alert('Erro ao cadastrar o serviço');
-                });
-        });
-    </script>
+         
 </body>
-
 </html>

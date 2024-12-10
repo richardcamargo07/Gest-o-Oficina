@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include_once('config_o.php');
 
 // Fetch services from database
@@ -8,12 +10,14 @@ $result = $conexao->query($sql);
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tela de Pagamento</title>
   <link rel="stylesheet" href="CSS/styles.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <style>
     .services-list {
       max-height: 300px;
@@ -21,6 +25,7 @@ $result = $conexao->query($sql);
       border: 1px solid #ccc;
       margin-bottom: 15px;
     }
+
     .services-list .service-item {
       display: flex;
       justify-content: space-between;
@@ -28,28 +33,34 @@ $result = $conexao->query($sql);
       border-bottom: 1px solid #eee;
       cursor: pointer;
     }
+
     .services-list .service-item:hover {
       background-color: #f0f0f0;
     }
+
     .selected-service {
       background-color: #e0e0e0;
     }
+
     .pecas-usadas {
       margin-top: 15px;
     }
+
     .pecas-usadas select {
       width: 100%;
       margin-bottom: 10px;
     }
+
     nav {
-        background: black;
+      background: black;
     }
+
     .nav-link {
-    display: block;
-    padding: .5rem 1rem;
-    color: gray;
-    text-decoration: none;
-    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+      display: block;
+      padding: .5rem 1rem;
+      color: gray;
+      text-decoration: none;
+      transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
     }
 
     .nav-link:hover {
@@ -57,35 +68,37 @@ $result = $conexao->query($sql);
     }
   </style>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="telaLogin.html">Login</a>
-              </li>
-              <li class="nav-item">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <?php if (isset($_SESSION['nivel_acesso']) && $_SESSION['nivel_acesso'] == 'gerente'): ?>
+            <li class="nav-item">
               <a class="nav-link" href="telaCadastro.php">Cadastrar</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="Control.php">Control</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="telaPagamentoMod.php">Pagamentos</a>
-              </li>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="telaServicos.php">Seriços</a>
-              </li>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="telaEstoque.php">Estoque</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="Control.php">Control</a>
+            </li>
+          <?php endif; ?>
+
+          <li class="nav-item">
+            <a class="nav-link" href="telaLogin.html">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="telaPagamentoMod.php">Pagamentos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="telaServicos.php">Serviços</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="telaEstoque.php">Estoque</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   <div class="container">
     <!-- Barra do navegador -->
     <header class="browser-bar">
@@ -104,14 +117,14 @@ $result = $conexao->query($sql);
       <section class="services-list">
         <?php
         if ($result->num_rows > 0) {
-            while ($servico = $result->fetch_assoc()) {
-                echo "<div class='service-item' data-id='{$servico['id']}' data-tipo='{$servico['tipoServ']}' data-preco='{$servico['preco']}' data-cliente='{$servico['nomeCliente']}'>";
-                echo "<span>{$servico['tipoServ']} - {$servico['nomeCliente']}</span>";
-                echo "<span>R$ {$servico['preco']}</span>";
-                echo "</div>";
-            }
+          while ($servico = $result->fetch_assoc()) {
+            echo "<div class='service-item' data-id='{$servico['id']}' data-tipo='{$servico['tipoServ']}' data-preco='{$servico['preco']}' data-cliente='{$servico['nomeCliente']}'>";
+            echo "<span>{$servico['tipoServ']} - {$servico['nomeCliente']}</span>";
+            echo "<span>R$ {$servico['preco']}</span>";
+            echo "</div>";
+          }
         } else {
-            echo "<p>Nenhum serviço encontrado.</p>";
+          echo "<p>Nenhum serviço encontrado.</p>";
         }
         ?>
       </section>
@@ -132,11 +145,11 @@ $result = $conexao->query($sql);
             // Fetch products from database
             $produtos_sql = "SELECT id, nome, quantidade, categoria FROM produtos";
             $produtos_result = $conexao->query($produtos_sql);
-            
+
             if ($produtos_result->num_rows > 0) {
-                while ($produto = $produtos_result->fetch_assoc()) {
-                    echo "<option value='{$produto['id']}' data-quantidade='{$produto['quantidade']}' data-nome='{$produto['nome']}'>{$produto['nome']} (Estoque: {$produto['quantidade']})</option>";
-                }
+              while ($produto = $produtos_result->fetch_assoc()) {
+                echo "<option value='{$produto['id']}' data-quantidade='{$produto['quantidade']}' data-nome='{$produto['nome']}'>{$produto['nome']} (Estoque: {$produto['quantidade']})</option>";
+              }
             }
             ?>
           </select>
@@ -179,7 +192,7 @@ $result = $conexao->query($sql);
   <script>
     // Selecionar serviço
     document.querySelectorAll('.service-item').forEach(item => {
-      item.addEventListener('click', function() {
+      item.addEventListener('click', function () {
         // Remove seleção anterior
         document.querySelectorAll('.service-item').forEach(el => el.classList.remove('selected-service'));
         this.classList.add('selected-service');
@@ -221,7 +234,7 @@ $result = $conexao->query($sql);
 
       // Confirmação de uso
       const confirmacao = confirm(`Deseja realmente usar as seguintes peças?\n${selectedPecas.map(p => p.nome).join(', ')}`);
-      
+
       if (confirmacao) {
         // Preparar dados para enviar ao servidor
         const dadosEnvio = {
@@ -237,19 +250,19 @@ $result = $conexao->query($sql);
           },
           body: JSON.stringify(dadosEnvio)
         })
-        .then(response => response.json())
-        .then(data => {
-          if (data.sucesso) {
-            alert('Peças baixadas do estoque com sucesso!');
-            location.reload(); // Recarregar página
-          } else {
-            alert('Erro ao processar pagamento: ' + data.mensagem);
-          }
-        })
-        .catch(error => {
-          console.error('Erro:', error);
-          alert('Erro ao processar pagamento');
-        });
+          .then(response => response.json())
+          .then(data => {
+            if (data.sucesso) {
+              alert('Peças baixadas do estoque com sucesso!');
+              location.reload(); // Recarregar página
+            } else {
+              alert('Erro ao processar pagamento: ' + data.mensagem);
+            }
+          })
+          .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao processar pagamento');
+          });
       }
     }
 
@@ -262,7 +275,7 @@ $result = $conexao->query($sql);
 
       // Lógica de pagamento
       const confirmacao = confirm('Deseja finalizar o pagamento deste serviço?');
-      
+
       if (confirmacao) {
         fetch('processar_pagamento.php', {
           method: 'POST',
@@ -274,21 +287,78 @@ $result = $conexao->query($sql);
             finalizarServico: true
           })
         })
+          .then(response => response.json())
+          .then(data => {
+            if (data.sucesso) {
+              alert('Serviço finalizado com sucesso!');
+              location.reload(); // Recarregar página
+            } else {
+              alert('Erro ao finalizar serviço: ' + data.mensagem);
+            }
+          })
+          .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao finalizar serviço');
+          });
+      }
+    }
+
+    // Função para adicionar produto temporariamente
+    function adicionarProduto(produtoId, nome, preco) {
+      // Adicionar à lista de selecionados sem baixar do estoque
+      const listaProdutos = document.getElementById('listaProdutos');
+      const novoProduto = document.createElement('li');
+      novoProduto.innerHTML = `
+        ${nome} - R$ ${preco} 
+        <button onclick="removerProduto(this, ${produtoId})">Remover</button>
+    `;
+      novoProduto.dataset.produtoId = produtoId;
+      listaProdutos.appendChild(novoProduto);
+    }
+
+    // Função para remover produto da lista
+    function removerProduto(botao, produtoId) {
+      botao.closest('li').remove();
+    }
+
+    // Função de pagamento
+    function processarPagamento() {
+      const listaProdutos = document.getElementById('listaProdutos');
+      const produtos = Array.from(listaProdutos.children).map(li =>
+        parseInt(li.dataset.produtoId)
+      );
+
+      const dadosPagamento = {
+        servicoId: servicoAtualId, // ID do serviço atual
+        pecas: produtos,
+        finalizarServico: true
+      };
+
+      fetch('processar_pagamento.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dadosPagamento)
+      })
         .then(response => response.json())
         .then(data => {
           if (data.sucesso) {
-            alert('Serviço finalizado com sucesso!');
-            location.reload(); // Recarregar página
+            alert('Pagamento processado com sucesso!');
+            // Limpar lista de produtos
+            listaProdutos.innerHTML = '';
+            // Atualizar lista de produtos/estoque na página
+            location.reload();
           } else {
-            alert('Erro ao finalizar serviço: ' + data.mensagem);
+            alert('Erro no processamento: ' + data.mensagem);
           }
         })
         .catch(error => {
           console.error('Erro:', error);
-          alert('Erro ao finalizar serviço');
+          alert('Erro no processamento do pagamento');
         });
-      }
     }
   </script>
 </body>
+
 </html>

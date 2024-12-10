@@ -1,5 +1,20 @@
 <?php
 
+session_start();
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['email']) || !isset($_SESSION['nivel_acesso'])) {
+    header('Location: telaLogin.html');
+    exit();
+}
+
+// Verifica se o usuário tem nível de acesso de gerente para acessar a página
+if ($_SESSION['nivel_acesso'] !== 'gerente') {
+    echo "<script>alert('Acesso negado. Somente gerentes podem acessar esta página.'); window.location.href = 'telaLogin.html';</script>";
+    exit();
+}
+
+
 
 include_once('config_o.php');
 
